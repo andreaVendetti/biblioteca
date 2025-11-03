@@ -1,44 +1,72 @@
-# ==============================
-# GITIGNORE - Progetto Biblioteca
-# ==============================
+# =========================================
+# .gitignore - Progetto Java Web "Biblioteca"
+# Autore: Andrea Vendetti
+# =========================================
 
-# Ignora la cartella connessione (fuori dal progetto)
+# Ignora la cartella di connessione (fuori dal progetto)
 ../connessione/
 
-# Build e compilati
+# =========================================
+# Cartelle di build e compilazione
+# =========================================
 bin/
 build/
 target/
 out/
 
+# =========================================
 # File compilati Java
+# =========================================
 *.class
 
-# File di pacchetti
+# =========================================
+# File di pacchetti (JAR, WAR, EAR)
+# =========================================
 *.jar
 *.war
 *.ear
 
-# IDE e impostazioni locali
-.vscode/
-.idea/
-*.iml
-.classpath
+# =========================================
+# IDE e ambienti di sviluppo
+# =========================================
+
+# Eclipse
 .project
+.classpath
 .settings/
 
-# Log e file temporanei
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Visual Studio Code
+.vscode/
+
+# NetBeans
+nbproject/
+nbbuild/
+dist/
+nbdist/
+# =========================================
+# Log, temporanei e backup
+# =========================================
 *.log
 *.tmp
 *.bak
 *.swp
 *~
+*.orig
 
-# File di sistema (Windows / Mac)
+# =========================================
+# File di sistema (Windows / macOS)
+# =========================================
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# File di server / Tomcat
-work/
+# =========================================
+# Server / Tomcat / configurazioni runtime
+# =========================================
 Servers/
+work/
