@@ -1,0 +1,12 @@
+
+body {
+     background-image: url("../img/libreria.jpg");
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+}
+
+.table td, .table th{
+	white-space: nowrap;
+}

@@ -1,0 +1,44 @@
+# ==============================
+# GITIGNORE - Progetto Biblioteca
+# ==============================
+
+# Ignora la cartella connessione (fuori dal progetto)
+../connessione/
+
+# Build e compilati
+bin/
+build/
+target/
+out/
+
+# File compilati Java
+*.class
+
+# File di pacchetti
+*.jar
+*.war
+*.ear
+
+# IDE e impostazioni locali
+.vscode/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Log e file temporanei
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# File di sistema (Windows / Mac)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# File di server / Tomcat
+work/
+Servers/
