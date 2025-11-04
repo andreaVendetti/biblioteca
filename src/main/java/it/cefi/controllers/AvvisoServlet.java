@@ -25,7 +25,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AvvisoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5703879079981092205L;
-	private static final String N8N_URL = "https://andrea22.app.n8n.cloud/webhook-test/avviso-biblioteca";
+	String webhookUrl = System.getenv("N8N_WEBHOOK_URL");
+
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -63,7 +64,7 @@ public class AvvisoServlet extends HttpServlet {
 
 	private void inviaEmailN8n(Utente utente, String titoloLibro) {
 		try {
-			URL url = new URL(N8N_URL);
+			URL url = new URL(webhookUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json; utf-8");

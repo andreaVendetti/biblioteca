@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="verify.jsp"%>
 <html>
 	<head>
 		<meta charset="UTF-8">

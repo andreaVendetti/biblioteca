@@ -30,7 +30,8 @@ import jakarta.servlet.http.HttpSession;
 public class RecuperoPassServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static final String N8N_URL = "https://andrea22.app.n8n.cloud/webhook-test/avviso-biblioteca";
+	//recupero la variabile d'ambiente settata in precedenza
+	String webhookUrl = System.getenv("N8N_WEBHOOK_URL");
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -77,7 +78,7 @@ public class RecuperoPassServlet extends HttpServlet {
 	private void inviaEmailN8n(String email) {
 		try {
 			// mi creo una url passandogli quella di n8n
-			URL url = new URL(N8N_URL);
+			URL url = new URL(webhookUrl);
 			// mi creo un oggetto httpUrlConnection per aprirmi una connessione con la metodologia http
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
