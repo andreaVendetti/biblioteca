@@ -10,7 +10,7 @@ public interface LibroRepository {
 	
 	List<Libro> getLibri(int offset) throws SQLException;
 
-	List<Libro> orderBy(List<Libro> lista, boolean ordine) throws SQLException;//da fare dopo
+	List<Libro> orderBy(String regex, int offset) throws SQLException;//da fare dopo
 
 	List<Libro> researchBy(String ricerca, String valore, int offset) throws SQLException;
 

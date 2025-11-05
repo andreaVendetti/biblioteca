@@ -44,7 +44,7 @@ public class ResearchServlet extends HttpServlet {
 
 					listaLibri = libroDAO.getLibri(offset);
 
-				} else if (option != null || option.matches("[a-zA-Z]")) {
+				} else if (option != null && option.matches("[a-zA-Z_.]+")) {
 
 					listaLibri = libroDAO.researchBy(option, valore, offset);
 
@@ -52,14 +52,13 @@ public class ResearchServlet extends HttpServlet {
 
 				
 				// se l'ordine è stato selezionato ordina la lista
-				if (ordine != null && listaLibri != null) {
-					boolean ord = Boolean.parseBoolean(ordine);
-					listaLibri = libroDAO.orderBy(listaLibri, ord);
+				if (ordine != null  && !ordine.isBlank()) {
+					listaLibri = libroDAO.orderBy(ordine ,offset);
 				}
 			
 		
 			} else {
-				request.setAttribute("avviso", "Per vedere i libri fai una ricerca");
+				request.setAttribute("avviso", "Per vedere e/o ordinare i libri fai una ricerca");
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {

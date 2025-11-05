@@ -15,16 +15,25 @@
 				<form class="search-form row g-2 align-items-center" action="research" method="get">
 						<div class="my-3">
 							<select class="form-select-sm" name="options">
-								<option selected="selected" value="tutti">Tutti i libri</option>
-								<option value="titolo">Titolo</option>
-								<option value="genere">Genere</option>
-								<option value="cognome">Autore(cognome)</option>
-								<option value="nome">Autore(nome)</option>
+								<option  selected="selected" value="">Seleziona una scelta</option>
+								<option value="tutti">Tutti i libri</option>
+								<option value="l.titolo">Titolo</option>
+								<option value="l.genere">Genere</option>
+								<option value="a.cognome">Autore(cognome)</option>
+								<option value="a.nome">Autore(nome)</option>
 							</select>  
 							<select class="form-select-sm" name="orders">
-								<option value="">Seleziona una scelta</option>
-								<option value="${true }">Ascendente</option>
-								<option value="${false }">Discendente</option>
+								<option value=" ">Seleziona una scelta</option>
+								<option value="l.titolo%asc">Titolo asc</option>
+								<option value="l.titolo%desc">Titolo disc</option>
+								<option value="l.genere%asc">Genere asc</option>
+								<option value="l.genere%desc">Genere disc</option>
+								<option value="a.nome%asc">Autore nome asc</option>
+								<option value="a.nome%desc">Autore nome disc</option>
+								<option value="a.cognome%asc">Autore cognome asc</option>
+								<option value="a.cognome%desc">Autore cognome disc</option>
+								<option value="l.disponibilita%asc">Disponibilit&agrave; asc</option>
+								<option value="l.disponibilita%desc">Disponibilit&agrave; disc</option>
 							</select>
 							<input class="form-control-sm" type="text" name="valore" maxlength="50">
 		
@@ -64,7 +73,7 @@
 															<p class="badge bg-danger">Libro non disponibile</p>
 														</c:when>
 														<c:otherwise>
-															<a class="btn btn-primary btn-sm" href="edit_prestito.jsp?idLibro=${libro.getId()}">Prestito</a>
+															<a class="btn btn-primary btn-sm" href="edit_prestito.jsp?idLibro=${libro.getId()}&titolo=${libro.titolo}">Prestito</a>
 														</c:otherwise>
 													</c:choose>
 												</td>
@@ -86,7 +95,7 @@
 						</table>
 							<div>
 							    <c:if test="${page > 1}">
-							        <a href="research?page=${page - 1}&size=${pageSize}&options=${param.options}&valore=${param.valore}">« Prev</a>
+							        <a href="research?page=${page - 1}&size=${pageSize}&options=${param.options}&valore=${param.valore}}">« Prev</a>
 							    </c:if>
 							    <span>Pagina ${page}</span>
 							    <c:if test="${libri.size() == pageSize}">

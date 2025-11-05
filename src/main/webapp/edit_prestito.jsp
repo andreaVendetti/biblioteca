@@ -22,14 +22,13 @@
 					<form action="savePrestito" method="get">
 						<input type="hidden" name="idPrestito" value="${param.idPrestito }"> 
 						<div class="my-3">
-							<label class="form-label">Id Utente</label>
-							<br>
-							<input class="form-control" type="number" name="idUtente" value="${utente.getId()}" required>
+							<input class="form-control" type="hidden" name="idUtente" value="${utente.getId()}" required>
 						</div>
 						<div class="my-3">
-							<label class="form-label">Id Libro</label>
+							<input class="form-control" type="hidden" name="idLibro" value="${param.idLibro}" required>
+							<label class="form-label">Titolo</label>
 							<br>
-							<input class="form-control" type="number" name="idLibro" value="${param.idLibro}" required>
+							<input class="form-control" type="text" name="Libro" value="${param.titolo}"  required>
 						</div>
 							<c:choose>
 								<c:when test="${param.idPrestito == null || param.idPrestito == 0}">

@@ -50,16 +50,43 @@ public class LibroDAO implements LibroRepository {
 		return listaLibri;
 	}
 	
-	//da completare
+	//modificato il metodo orderBy
 	@Override
-	public List<Libro> orderBy(List<Libro> lista, boolean ordine) throws SQLException {
-		List<Libro> ordinati;
-		//return ordinati = ordine.replaceAll("[a-zA-Z]%", "").equalsIgnoreCase("asc") ? lista.stream().sorted().toList() : lista.stream().sorted().toList().reversed();
-		if(ordine) {
-			ordinati = lista.stream().sorted((l1, l2) -> l1.getTitolo().compareToIgnoreCase(l2.getTitolo())).toList();
-		} else {
-			ordinati = lista.stream().sorted((l1, l2) -> l1.getTitolo().compareToIgnoreCase(l2.getTitolo())).toList().reversed();
+	public List<Libro> orderBy(String regex, int offset) throws SQLException {
+		List<Libro> ordinati = new ArrayList<>();
+		String[] ordine = regex.split("%");
+		String campo = ordine[0];
+		String ord = ordine[1].equalsIgnoreCase("desc") ? "desc" : "asc";
+		if(!campo.matches("[a-zA-Z_.]+")) {
+			campo = "l.id";
 		}
+		try (Connection connection = Connessione.getConnection()) {
+			String sql = "select l.id, l.titolo, l.genere, l.disponibilita, a.id, a.nome, a.cognome, a.id "
+						+"from libri as l " 
+						+ "left join autori as a " 
+						+ "on a.id = l.autore "
+						+ " order by " + campo + " " + ord 
+						+ " limit 10 offset ?";
+			PreparedStatement statement = connection.prepareStatement(sql);			
+			statement.setInt(1, offset);
+			ResultSet set = statement.executeQuery();
+			while (set.next()) {
+				ordinati.add(new Libro(set.getInt("id"),
+										 set.getString("titolo"), 
+										 set.getString("genere"), 
+										 set.getInt("disponibilita"),
+										 new Autore(set.getInt("a.id"), 
+										 set.getString("a.nome"), 
+										 set.getString("a.cognome"))));
+			}
+		}
+//		prima versione di ordinamento
+//		if(ordine) {
+//			ordinati = lista.stream().sorted((l1, l2) -> l1.getTitolo().compareToIgnoreCase(l2.getTitolo())).toList();
+//		} else {
+//			ordinati = lista.stream().sorted((l1, l2) -> l1.getTitolo().compareToIgnoreCase(l2.getTitolo())).toList().reversed();
+//		}
+		
 		return ordinati;
 	}
 
@@ -67,31 +94,7 @@ public class LibroDAO implements LibroRepository {
 	@Override
 	public List<Libro> researchBy(String ricerca, String valore, int offset) throws SQLException {
 		List<Libro> listaLibri = new ArrayList<>();
-//		possibile soluzione manuale
-//		switch(ricerca.toLowerCase()) {
-//			case "genere":
-//				listaLibri = allLibri.stream()
-//							.filter(l -> l.getGenere()
-//										  .contains(valore))
-//							.toList();
-//				break;
-//			case "titolo":
-//				listaLibri = allLibri.stream()
-//							.filter(l -> l.getTitolo()
-//										  .contains(valore))
-//							.toList();
-//				break;
-//			case "autore":
-//				listaLibri = allLibri.stream()
-//							.filter(l -> l.getAutore()
-//										  .getCognome()
-//										  .contains(valore) || 
-//										 l.getAutore()
-//										  .getNome()
-//										  .contains(valore))
-//							.toList();
-//				break;
-//	}
+
 		try (Connection connection = Connessione.getConnection()) {
 			//mi creo uno StringBuilder per aggiungere ad esso le percentuali per la query
 			StringBuilder builder = new StringBuilder(valore);
@@ -123,6 +126,7 @@ public class LibroDAO implements LibroRepository {
 			return listaLibri;			
 		}
 	}
+
 
 	//metodo che serve per eliminare un libro
 	@Override
@@ -227,6 +231,7 @@ public class LibroDAO implements LibroRepository {
 //	    }
 //	    return libro;
 //	}
+
 
 
 
