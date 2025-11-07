@@ -68,9 +68,14 @@
 								</table>
 							</div>
 							<c:choose>
+								<c:when test="${fallimento != null }">
+									Operazione non andata a buon fine.
+									<p class="alert alert-warning">${fallimento }</p>	
+									<c:remove var="fallimento" scope="session"/>
+								</c:when>
 								<c:when test="${successo != null }">
-											Operazione andata a buon fine.
-											<p class="alert alert-success">${successo }</p>
+									Operazione andata a buon fine.
+									<p class="alert alert-success">${successo }</p>
 								</c:when>
 							</c:choose>
 						</c:when>
