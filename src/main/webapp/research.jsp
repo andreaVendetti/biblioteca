@@ -43,6 +43,7 @@
 						<table class="table table-hover table-sm w-100">
 							<thead>
 								<tr class="table-info">
+									<th>Copertina</th>
 									<th>Titolo</th>
 									<th>Genere</th>
 									<th>Nome Autore</th>
@@ -56,6 +57,16 @@
 											<tr class="my-2">
 												<td hidden="hidden">
 													<input type="hidden" name="id" value="${libro.getId()}">
+												</td>
+												<td>
+													<c:choose>
+														<c:when test="${libro.copertina == null }">
+															<img class="img-responsive" height="100px" width="100px" alt="copertina" src="img/libri/generale.png" >
+														</c:when>
+														<c:otherwise>
+															<img class="img-responsive" height="100px" width="100px" alt="copertina" src="${libro.getCopertina() }">
+														</c:otherwise>
+													</c:choose>
 												</td>
 												<td>${libro.getTitolo().toUpperCase()}</td>
 												<td>${libro.getGenere().toUpperCase()}</td>
@@ -95,7 +106,7 @@
 						</table>
 							<div>
 							    <c:if test="${page > 1}">
-							        <a href="research?page=${page - 1}&size=${pageSize}&options=${param.options}&valore=${param.valore}}">« Prev</a>
+							        <a href="research?page=${page - 1}&size=${pageSize}&options=${param.options}&valore=${param.valore}">« Prev</a>
 							    </c:if>
 							    <span>Pagina ${page}</span>
 							    <c:if test="${libri.size() == pageSize}">

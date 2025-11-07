@@ -1,3 +1,4 @@
+
 package it.cefi.dao;
 
 import java.sql.Connection;
@@ -28,7 +29,7 @@ public class LibroDAO implements LibroRepository {
 	public List<Libro> getLibri(int offset) throws SQLException {
 		List<Libro> listaLibri = new ArrayList<>();
 		try (Connection connection = Connessione.getConnection()) {
-			String sql = "select l.id, l.titolo, l.genere, l.disponibilita, a.id, a.nome, a.cognome, a.id "
+			String sql = "select l.id, l.titolo, l.genere, l.disponibilita, l.copertina, a.nome, a.cognome, a.id "
 						+"from libri as l " 
 						+ "left join autori as a " 
 						+ "on a.id = l.autore "
@@ -42,8 +43,9 @@ public class LibroDAO implements LibroRepository {
 										 set.getString("genere"), 
 										 set.getInt("disponibilita"),
 										 new Autore(set.getInt("a.id"), 
-										 set.getString("a.nome"), 
-										 set.getString("a.cognome"))));
+												 	set.getString("a.nome"), 
+												 	set.getString("a.cognome")),
+										 set.getString("copertina")));
 			}
 		}
 
@@ -61,7 +63,7 @@ public class LibroDAO implements LibroRepository {
 			campo = "l.id";
 		}
 		try (Connection connection = Connessione.getConnection()) {
-			String sql = "select l.id, l.titolo, l.genere, l.disponibilita, a.id, a.nome, a.cognome, a.id "
+			String sql = "select l.id, l.titolo, l.genere, l.disponibilita,l.copertina, a.id, a.nome, a.cognome, a.id "
 						+"from libri as l " 
 						+ "left join autori as a " 
 						+ "on a.id = l.autore "
@@ -77,7 +79,8 @@ public class LibroDAO implements LibroRepository {
 										 set.getInt("disponibilita"),
 										 new Autore(set.getInt("a.id"), 
 										 set.getString("a.nome"), 
-										 set.getString("a.cognome"))));
+										 set.getString("a.cognome")),
+										 set.getString("copertina")));
 			}
 		}
 //		prima versione di ordinamento
@@ -100,7 +103,7 @@ public class LibroDAO implements LibroRepository {
 			StringBuilder builder = new StringBuilder(valore);
 			builder.insert(0, "%");
 			builder.append("%");
-			String sql = "select l.id, l.titolo, l.genere, l.disponibilita, a.id, a.nome, a.cognome " +
+			String sql = "select l.id, l.titolo, l.genere, l.disponibilita,l.copertina, a.id, a.nome, a.cognome " +
 		             "from libri as l " +
 		             "inner join autori as a on a.id = l.autore " +
 		             "where " + ricerca + " like ? " + 
@@ -116,7 +119,8 @@ public class LibroDAO implements LibroRepository {
 										 set.getInt("disponibilita"),
 										 new Autore(set.getInt("a.id"), 
 										 set.getString("a.nome"), 
-										 set.getString("a.cognome"))));
+										 set.getString("a.cognome")),
+										 set.getString("copertina")));
 			}
 		}
 		//se la lista è vuota  restituisc null
@@ -196,7 +200,8 @@ public class LibroDAO implements LibroRepository {
 							  set.getInt("disponibilita"), 
 							  new Autore(set.getInt("autore"),
 									  	 null, 	
-									  	 null));
+									  	 null),
+							  set.getString("copertina"));
 		}
 		return libro;
 	}

@@ -14,6 +14,8 @@ public class Libro {
 
 	private Integer idAutore;
 	
+	private String copertina;
+	
 	private Autore autore;
 	
 	public Libro() {
@@ -23,19 +25,14 @@ public class Libro {
 		
 	}
 
-	public Libro(String titolo, String genere, int disponibilita, Autore autore) {
-		this.titolo = titolo;
-		this.genere = genere;
-		this.disponibilita = disponibilita;
-		this.autore = autore;
-	}
 
-	public Libro(int id, String titolo, String genere, int disponibilita, Autore autore) {
+	public Libro(int id, String titolo, String genere, int disponibilita, Autore autore, String copertina) {
 		this.id = id;
 		this.titolo = titolo;
 		this.genere = genere;
 		this.autore = autore;
 		this.disponibilita = disponibilita;
+		this.copertina = copertina;
 	}
 
 	public Libro(int id, String titolo, String genere, int disponibilita, Integer idAutore) {
@@ -109,6 +106,14 @@ public class Libro {
 	public String toString() {
 		return "Libro [id=" + id + ", titolo=" + titolo + ", genere=" + genere + ", disponibilita=" + disponibilita
 				+ ", autoreNome=" + autore.getNome() + ", autoreCognome=" + autore.getCognome() + "]";
+	}
+
+	public String getCopertina() {
+		return copertina;
+	}
+
+	public void setCopertina(String copertina) {
+		this.copertina = copertina;
 	}
 
 
