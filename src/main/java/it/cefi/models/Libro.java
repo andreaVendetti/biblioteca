@@ -16,6 +16,8 @@ public class Libro {
 	
 	private String copertina;
 	
+	private String trama;
+	
 	private Autore autore;
 	
 	public Libro() {
@@ -26,13 +28,14 @@ public class Libro {
 	}
 
 
-	public Libro(int id, String titolo, String genere, int disponibilita, Autore autore, String copertina) {
+	public Libro(int id, String titolo, String genere, int disponibilita, Autore autore, String copertina, String trama) {
 		this.id = id;
 		this.titolo = titolo;
 		this.genere = genere;
 		this.autore = autore;
 		this.disponibilita = disponibilita;
 		this.copertina = copertina;
+		this.trama = trama;
 	}
 
 	public Libro(int id, String titolo, String genere, int disponibilita, Integer idAutore) {
@@ -83,6 +86,23 @@ public class Libro {
 	public void setDisponibilita(int disponibilita) {
 		this.disponibilita = disponibilita;
 	}
+	public String getCopertina() {
+		return copertina;
+	}
+
+	public void setCopertina(String copertina) {
+		this.copertina = copertina;
+	}
+
+
+	public String getTrama() {
+		return trama;
+	}
+
+
+	public void setTrama(String trama) {
+		this.trama = trama;
+	}
 
 	@Override
 	public int hashCode() {
@@ -108,13 +128,7 @@ public class Libro {
 				+ ", autoreNome=" + autore.getNome() + ", autoreCognome=" + autore.getCognome() + "]";
 	}
 
-	public String getCopertina() {
-		return copertina;
-	}
-
-	public void setCopertina(String copertina) {
-		this.copertina = copertina;
-	}
+	
 
 
 }

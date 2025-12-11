@@ -29,7 +29,7 @@ public class LibroDAO implements LibroRepository {
 	public List<Libro> getLibri(int offset) throws SQLException {
 		List<Libro> listaLibri = new ArrayList<>();
 		try (Connection connection = Connessione.getConnection()) {
-			String sql = "select l.id, l.titolo, l.genere, l.disponibilita, l.copertina, a.nome, a.cognome, a.id "
+			String sql = "select l.id, l.titolo, l.genere, l.disponibilita, l.copertina, l.trama, a.nome, a.cognome, a.id "
 						+"from libri as l " 
 						+ "left join autori as a " 
 						+ "on a.id = l.autore "
@@ -45,7 +45,8 @@ public class LibroDAO implements LibroRepository {
 										 new Autore(set.getInt("a.id"), 
 												 	set.getString("a.nome"), 
 												 	set.getString("a.cognome")),
-										 set.getString("copertina")));
+										 set.getString("copertina"),
+										 set.getString("trama")));
 			}
 		}
 
@@ -63,7 +64,7 @@ public class LibroDAO implements LibroRepository {
 			campo = "l.id";
 		}
 		try (Connection connection = Connessione.getConnection()) {
-			String sql = "select l.id, l.titolo, l.genere, l.disponibilita,l.copertina, a.id, a.nome, a.cognome, a.id "
+			String sql = "select l.id, l.titolo, l.genere, l.disponibilita,l.copertina, l.trama, a.id, a.nome, a.cognome, a.id "
 						+"from libri as l " 
 						+ "left join autori as a " 
 						+ "on a.id = l.autore "
@@ -80,7 +81,8 @@ public class LibroDAO implements LibroRepository {
 										 new Autore(set.getInt("a.id"), 
 										 set.getString("a.nome"), 
 										 set.getString("a.cognome")),
-										 set.getString("copertina")));
+										 set.getString("copertina"),
+										 set.getString("trama")));
 			}
 		}
 //		prima versione di ordinamento
@@ -103,7 +105,7 @@ public class LibroDAO implements LibroRepository {
 			StringBuilder builder = new StringBuilder(valore);
 			builder.insert(0, "%");
 			builder.append("%");
-			String sql = "select l.id, l.titolo, l.genere, l.disponibilita,l.copertina, a.id, a.nome, a.cognome " +
+			String sql = "select l.id, l.titolo, l.genere, l.disponibilita,l.copertina,l.trama, a.id, a.nome, a.cognome " +
 		             "from libri as l " +
 		             "inner join autori as a on a.id = l.autore " +
 		             "where " + ricerca + " like ? " + 
@@ -120,7 +122,8 @@ public class LibroDAO implements LibroRepository {
 										 new Autore(set.getInt("a.id"), 
 										 set.getString("a.nome"), 
 										 set.getString("a.cognome")),
-										 set.getString("copertina")));
+										 set.getString("copertina"),
+										 set.getString("trama")));
 			}
 		}
 		//se la lista è vuota  restituisc null
@@ -185,57 +188,58 @@ public class LibroDAO implements LibroRepository {
 
 	}
 
-	@Override
-	public Libro getLibro(int id) throws SQLException {
-		Libro libro;
-		try(Connection connection = Connessione.getConnection()){
-			String sql = "select * from libri where id = ?";
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, id);
-			ResultSet set = statement.executeQuery();
-			set.next();
-			libro = new Libro(set.getInt("id"),
-							  set.getString("titolo"), 
-							  set.getString("genere"), 
-							  set.getInt("disponibilita"), 
-							  new Autore(set.getInt("autore"),
-									  	 null, 	
-									  	 null),
-							  set.getString("copertina"));
-		}
-		return libro;
-	}
-// funziona 
 //	@Override
 //	public Libro getLibro(int id) throws SQLException {
-//	    Libro libro = null;
-//	    try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
-//	        String sql = "select l.id, l.titolo, l.genere, l.disponibilita, "
-//	                   + "a.id as autore_id, a.nome as autore_nome, a.cognome as autore_cognome "
-//	                   + "from libri as l "
-//	                   + "inner join autori as a on a.id = l.autore "
-//	                   + "where l.id = ?";
-//
-//	        PreparedStatement statement = connection.prepareStatement(sql);
-//	        statement.setInt(1, id);
-//
-//	        ResultSet set = statement.executeQuery();
-//	        if (set.next()) {
-//	            libro = new Libro(
-//	                set.getInt("id"),
-//	                set.getString("titolo"),
-//	                set.getString("genere"),
-//	                set.getInt("disponibilita"),
-//	                new Autore(
-//	                    set.getInt("autore_id"),
-//	                    set.getString("autore_nome"),
-//	                    set.getString("autore_cognome")
-//	                )
-//	            );
-//	        }
-//	    }
-//	    return libro;
+//		Libro libro;
+//		try(Connection connection = Connessione.getConnection()){
+//			String sql = "select * from libri where id = ?";
+//			PreparedStatement statement = connection.prepareStatement(sql);
+//			statement.setInt(1, id);
+//			ResultSet set = statement.executeQuery();
+//			set.next();
+//			libro = new Libro(set.getInt("id"),
+//							  set.getString("titolo"), 
+//							  set.getString("genere"), 
+//							  set.getInt("disponibilita"), 
+//							  new Autore(set.getInt("autore"),
+//									  	 null, 	
+//									  	 null),
+//							  set.getString("copertina"),
+//							  set.getString("trama"));
+//		}
+//		return libro;
 //	}
+// funziona 
+	@Override
+	public Libro getLibro(int id) throws SQLException {
+	    Libro libro = null;
+	    try (Connection connection = Connessione.getConnection()) {
+	        String sql = "select l.id, l.titolo, l.genere, l.disponibilita,l.copertina, l.trama, "
+	                   + "a.id as autore_id, a.nome as autore_nome, a.cognome as autore_cognome "
+	                   + "from libri as l "
+	                   + "inner join autori as a on a.id = l.autore "
+	                   + "where l.id = ?";
+
+	        PreparedStatement statement = connection.prepareStatement(sql);
+	        statement.setInt(1, id);
+
+	        ResultSet set = statement.executeQuery();
+	        if (set.next()) {
+	            libro = new Libro(
+	                set.getInt("id"),
+	                set.getString("titolo"),
+	                set.getString("genere"),
+	                set.getInt("disponibilita"),
+	                new Autore(
+	                    set.getInt("autore_id"),
+	                    set.getString("autore_nome"),
+	                    set.getString("autore_cognome")),
+	                set.getString("copertina"),
+	                set.getString("trama"));
+	        }
+	    }
+	    return libro;
+	}
 
 
 

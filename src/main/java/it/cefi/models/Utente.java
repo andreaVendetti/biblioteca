@@ -21,6 +21,11 @@ public class Utente extends Persona {
 		this.ruolo = 0;
 	}
 
+	public Utente(int id, String username) {
+		super(id);
+		this.username = username;
+	}
+	
 	public Utente(int id, String nome, String cognome, String username, String password, int ruolo, String email) {
 		super(id, nome, cognome);
 		this.username = username;

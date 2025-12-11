@@ -39,7 +39,7 @@
 		
 							<button class="btn btn-primary btn-sm" type="submit">Ricerca</button>
 						</div>
-					<div class="table-responsive">
+					<div class="table table-responsive">
 						<table class="table table-hover table-sm w-100">
 							<thead>
 								<tr class="table-info">
@@ -68,7 +68,7 @@
 														</c:otherwise>
 													</c:choose>
 												</td>
-												<td>${libro.getTitolo().toUpperCase()}</td>
+												<td><a class="link-light" href="visualBook?libroId=${libro.getId() }">${libro.getTitolo().toUpperCase()}</a></td>
 												<td>${libro.getGenere().toUpperCase()}</td>
 												<td>${libro.getAutore().getNome().toUpperCase()}
 													${libro.getAutore().getCognome().toUpperCase()}

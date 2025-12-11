@@ -12,6 +12,10 @@ public class Persona {
 
 	public Persona() {}
 	
+	public Persona(int id) {
+		this.id = id;
+	}
+	
 	public Persona(String nome, String cognome) {
 		this.nome = nome;
 		this.cognome = cognome;
