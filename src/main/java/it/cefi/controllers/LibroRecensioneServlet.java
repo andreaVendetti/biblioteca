@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/visualBook")
 public class LibroRecensioneServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 67L;
 	private static final int PAGE_SIZE = 10;
 	
 	@Override
