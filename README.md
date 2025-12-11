@@ -73,7 +73,7 @@ Configura le seguenti variabili d’ambiente sul tuo sistema (Windows, Mac o clo
 ---
 
   Autori
-Andrea Vendetti e Giulio Vittorio Ferrari
+Andrea Vendetti 
 Progetto realizzato per stage scolastico in collaborazione con CEFI Informatica.
 
 ---
